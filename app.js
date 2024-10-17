@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const http = require("http");
 const socketIo = require("socket.io");
@@ -10,12 +11,12 @@ const Conversation = require('./models/conversations');
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
-const Port = 8000;
+const Port = process.env.PORT || 8000;
 let users = {};
 
-connectDb("mongodb://127.0.0.1:27017/chats");
-
-app.use(logReqRes("log.txt"));
+connectDb(process.env.MONGO_URL);
+//"mongodb://127.0.0.1:27017/chats"
+//app.use(logReqRes("log.txt"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
